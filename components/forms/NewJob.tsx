@@ -7,7 +7,7 @@ import { createJobPosting } from "@/server";
 
 export function NewJobForm() {
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-5xl mx-auto">
       <h2 className="text-xl font-semibold mb-4">Create Job</h2>
       <Formik
         initialValues={{
@@ -21,6 +21,7 @@ export function NewJobForm() {
           status: "",
           job_type: "",
           vacancies: "",
+          organization_email: ""
         }}
         validate={(values) => {
           const errors = {};
@@ -28,38 +29,82 @@ export function NewJobForm() {
           return errors;
         }}
         onSubmit={async (values, { setSubmitting }) => {
-          // Handle form submission here
           await createJobPosting({
             title: values.title,
             description: values.description,
             salary_compensation: `${values.compensation_min} - ${values.compensation_max}`,
+            organization: values.organization
           });
-          setSubmitting(false)
+          setSubmitting(false);
         }}
       >
         {({ isSubmitting }) => (
           <Form className="space-y-4 p-4 border rounded-lg">
-            <div className="w-full px-3 mb-6 md:mb-0">
-              <label
-                htmlFor="title"
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-start"
-              >
-                Title
-              </label>
-              <Field
-                type="text"
-                name="title"
-                id="title"
-                className="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-              />
-              <ErrorMessage
-                name="title"
-                component="div"
-                className="text-red-600"
-              />
+            <div className="flex gap-2">
+              <div className="w-full md:flex-1">
+                <div className="w-full px-3 mb-6 md:mb-0">
+                  <label
+                    htmlFor="title"
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-start"
+                  >
+                    Title
+                  </label>
+                  <Field
+                    type="text"
+                    name="title"
+                    id="title"
+                    className="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  />
+                  <ErrorMessage
+                    name="title"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                <JobType />
+                <Compensation />
+              </div>
+              <div className="w-full md:flex-1">
+                <div className="w-full px-3 mb-6 md:mb-0">
+                  <label
+                    htmlFor="organization"
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-start"
+                  >
+                    Organisation Name
+                  </label>
+                  <Field
+                    type="text"
+                    name="organization"
+                    id="organization"
+                    className="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  />
+                  <ErrorMessage
+                    name="organization"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+                <div className="w-full px-3 mb-6 md:mb-0">
+                  <label
+                    htmlFor="organization_email"
+                    className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 text-start"
+                  >
+                    Organisation Email
+                  </label>
+                  <Field
+                    type="email"
+                    name="organization_email"
+                    id="organization_email"
+                    className="appearance-none block w-full text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  />
+                  <ErrorMessage
+                    name="organization_email"
+                    component="div"
+                    className="text-red-600"
+                  />
+                </div>
+              </div>
             </div>
-            <JobType />
-            <Compensation />
             <div className="w-full px-3 mb-6 md:mb-0">
               <label
                 htmlFor="description"

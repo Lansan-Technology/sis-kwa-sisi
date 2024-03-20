@@ -1,6 +1,7 @@
 import { getJob } from "@/server";
 import React from "react";
 import { JobDescription } from ".";
+import Link from "next/link";
 
 export async function JobDetails({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -40,12 +41,13 @@ export async function JobDetails({ params }: { params: { id: string } }) {
             </p>
           </div>
           <div className="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b">
-            <button
+            <Link
+            href={'/job-application'}
               type="button"
               className="text-white bg-primary font-medium rounded-lg  px-5 py-2.5 text-center"
             >
               Apply Now
-            </button>
+            </Link>
           </div>
         </div>
       </div>
