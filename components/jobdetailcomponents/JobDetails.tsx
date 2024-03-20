@@ -40,7 +40,7 @@ export function JobDetails() {
                 </p>
             </div>
             <div className="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b">
-                <button type="button" className="text-white bg-custom font-medium rounded-lg  px-5 py-2.5 text-center">Apply Now</button>
+                <button type="button" className="text-white bg-primary font-medium rounded-lg  px-5 py-2.5 text-center">Apply Now</button>
             </div>
         </div>
     </div>

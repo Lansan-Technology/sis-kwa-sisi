@@ -20,14 +20,15 @@ model job_application {
   cv           String?
   job          job          @relation(fields: [jobId], references: [id])
   jobId        String       @db.ObjectId
-  job_seeker   job_seeker[]
+  job_seekerid String @db.ObjectId
+  job_seeker   job_seeker @relation(fields: [job_seekerid], references: [id])
 }
 
 model job_seeker {
   id             String           @id @default(auto()) @map("_id") @db.ObjectId
   email          String
   names          String
-  id_number      Int
+  id_number      Int?
   location       String?
   phone_number   String
   qualification  Qualification[]
@@ -37,8 +38,8 @@ model job_seeker {
   photo          String?
   gender         Gender
   certification  String[]
-  application    job_application? @relation(fields: [jobApplication], references: [id])
-  jobApplication String           @db.ObjectId
+  application    String? 
+  jobApplications          job_application[]
 }
 
 model employer {
@@ -55,15 +56,16 @@ model employer {
 model job {
   id                  String            @id @default(auto()) @map("_id") @db.ObjectId
   title               String
-  salary_expectations Int
-  location            String
+  description         String
+  salary_compensation Int?
+  location            String?
   organization        String
   role                String
   status              JobStatus
   job_type            JobType
   vacancies           Int
   job_application     job_application[]
-  employer            employer[]
+  employer employer[]
 }
 
 enum Qualification {
