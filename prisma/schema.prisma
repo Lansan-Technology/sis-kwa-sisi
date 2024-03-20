@@ -12,3 +12,80 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model job_application {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  cover_letter String
+  date         DateTime     @default(now())
+  cv           String?
+  job          job          @relation(fields: [jobId], references: [id])
+  jobId        String       @db.ObjectId
+  job_seeker   job_seeker[]
+}
+
+model job_seeker {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  email          String
+  names          String
+  id_number      Int
+  location       String?
+  phone_number   String
+  qualification  Qualification[]
+  course         String[]
+  experience     Int
+  cv             String
+  photo          String?
+  gender         Gender
+  certification  String[]
+  application    job_application? @relation(fields: [jobApplication], references: [id])
+  jobApplication String           @db.ObjectId
+}
+
+model employer {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  names       String
+  company     String
+  description String
+  location    String
+  job         job?   @relation(fields: [jobId], references: [id])
+  jobId       String @db.ObjectId
+}
+
+model job {
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  title               String
+  salary_expectations Int
+  location            String
+  organization        String
+  role                String
+  status              JobStatus
+  job_type            JobType
+  vacancies           Int
+  job_application     job_application[]
+  employer            employer[]
+}
+
+enum Qualification {
+  MASTERS
+  DEGREE
+  CERTICATE
+  DIPLOMA
+}
+
+enum JobStatus {
+  VACANT
+  FILLED
+}
+
+enum JobType {
+  CONTRACT
+  FULLTIME
+  PARTTIME
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
