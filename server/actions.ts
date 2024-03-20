@@ -55,13 +55,6 @@ export async function createJobPosting(data: Job) {
 		data: {
 			title: data.title,
 			description: data.description,
-			salary_compensation: data.salary_compensation,
-			location: data.location,
-			organization: data.organization,
-			role: data.role,
-			status: data.status,
-			job_type: data.job_type,
-			vacancies: data.vacancies	
 		},
 	});
 }

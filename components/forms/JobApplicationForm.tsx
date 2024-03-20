@@ -12,22 +12,22 @@ interface FormValues {
   resume: null;
 }
 
+const validationSchema = Yup.object({
+  email: Yup.string().email("Invalid email address").required("Required"),
+  name : Yup.string().required("Name is required"),
+  resume: Yup.mixed().required("Resume is required"),
+});
+
+const initialValues = {
+  name: "",
+  email: "",
+  resume: null,
+};
+
 export function JobApplicationForm() {
   const handleSubmit = () => {
     console.log("job application submitted sucessfully");
   };
-
-  const initialValues = {
-    name: "",
-    email: "",
-    resume: null,
-  };
-
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("Required"),
-    name : Yup.string().required("Name is required"),
-    resume: Yup.mixed().required("Resume is required"),
-  });
 
   return (
     <div className="relative flex justify-center items-center flex-col text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border">
