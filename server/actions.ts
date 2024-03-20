@@ -1,6 +1,9 @@
 "use server";
 
+import { PrismaClient } from "@prisma/client";
 import { Job, JobApplication } from "./interfaces/interfaces";
+
+const prisma = new PrismaClient();
 
 export async function createEmployer() {}
 
