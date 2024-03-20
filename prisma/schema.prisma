@@ -44,11 +44,11 @@ model job_seeker {
 
 model employer {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
-  email       String
+  email       String @unique
   description String?
   location    String?
-  job         job?   @relation(fields: [jobId], references: [id])
-  jobId       String @db.ObjectId
+  job         job[]   
+ 
 }
 
 model job {
@@ -63,7 +63,8 @@ model job {
   job_type            JobType?
   vacancies           Int?
   job_application     job_application[]
-  employer employer[]
+  employerId          String @db.ObjectId
+  employer employer  @relation(fields: [employerId], references: [id])
 }
 
 enum Qualification {

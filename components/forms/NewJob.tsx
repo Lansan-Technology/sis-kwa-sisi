@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage, FieldProps } from "formik";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { createJobPosting } from "@/server";
+import { JobType  } from "@prisma/client";
 
 export function NewJobForm() {
   return (
@@ -33,8 +34,12 @@ export function NewJobForm() {
             title: values.title,
             description: values.description,
             salary_compensation: `${values.compensation_min} - ${values.compensation_max}`,
-            organization: values.organization
+            organization: values.organization,
+            email:values.organization_email,
+            job_type:values.job_type as JobType
+            
           });
+          console.log(values);
           setSubmitting(false);
         }}
       >
@@ -61,7 +66,7 @@ export function NewJobForm() {
                     className="text-red-600"
                   />
                 </div>
-                <JobType />
+                <JobTypeField />
                 <Compensation />
               </div>
               <div className="w-full md:flex-1">
@@ -147,7 +152,7 @@ export function NewJobForm() {
   );
 }
 
-function JobType() {
+function JobTypeField() {
   return (
     <div className="w-full px-3 mb-6 md:mb-0">
       <label
