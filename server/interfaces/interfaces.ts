@@ -1,35 +1,15 @@
-export enum JobStatus {
-	VACANT,
-	FILLED,
-}
+import { Gender, Qualification, JobStatus, JobType } from "@prisma/client";
 
-export enum Jobtype {
-	CONTRACT = "CONTRACT",
-	FULLTIME = "FULL-TIME",
-	PARTTIME = "PART-TIME",
-}
-export enum Qualification {
-	MASTERS,
-	DEGREE,
-	CERTICATE,
-	DIPLOMA,
-}
-
-export enum Gender {
-	MALE,
-	FEMALE,
-	OTHER,
-}
 
 export interface Job {
 	title: string;
 	description: string;
-	salary_expectations: number;
+	salary_compensation: number;
 	location: string;
 	organization: string;
 	role: string;
 	status: JobStatus;
-	job_type: Jobtype;
+	job_type: JobType;
 	vacancies: number;
 }
 
@@ -43,9 +23,9 @@ export interface JobSeeker {
 	names: string;
 	id_number: number;
 	location: string;
-	phone_number: String;
-	email: String;
-	qualification: Qualification;
+	phone_number: string;
+	email: string;
+	qualification: Qualification[];
 	course: string[];
 	experience: number;
 	cv: string;
