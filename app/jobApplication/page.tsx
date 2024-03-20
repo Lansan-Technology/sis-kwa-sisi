@@ -1,7 +1,9 @@
 import React from 'react'
+import { JobApplicationForm } from '../components'
 
-export function JobApplicationPage() {
+
+export  default function JobApplicationPage() {
   return (
-    <div>Job Application Page</div>
+    <JobApplicationForm/>
   )
 }
