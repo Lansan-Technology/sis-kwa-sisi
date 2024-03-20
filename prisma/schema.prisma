@@ -14,41 +14,41 @@ datasource db {
 }
 
 model job_application {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
   cover_letter String
-  date         DateTime     @default(now())
+  date         DateTime   @default(now())
   cv           String?
-  job          job          @relation(fields: [jobId], references: [id])
-  jobId        String       @db.ObjectId
-  job_seekerid String @db.ObjectId
+  job          job        @relation(fields: [jobId], references: [id])
+  jobId        String     @db.ObjectId
+  job_seekerid String     @db.ObjectId
   job_seeker   job_seeker @relation(fields: [job_seekerid], references: [id])
 }
 
 model job_seeker {
-  id             String           @id @default(auto()) @map("_id") @db.ObjectId
-  email          String
-  names          String
-  id_number      Int?
-  location       String?
-  phone_number   String?
-  qualification  Qualification[]
-  course         String[]
-  experience     Int?
-  cv             String?
-  photo          String?
-  gender         Gender?
-  certification  String[]
-  application    String? 
-  jobApplications          job_application[]
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  email           String            @unique()
+  names           String
+  id_number       Int?
+  location        String?
+  phone_number    String?
+  qualification   Qualification[]
+  course          String[]
+  experience      Int?
+  cv              String?
+  photo           String?
+  gender          Gender?
+  certification   String[]
+  application     String?
+  jobApplications job_application[]
 }
 
 model employer {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   email       String
   description String?
   location    String?
-  job         job?   @relation(fields: [jobId], references: [id])
-  jobId       String @db.ObjectId
+  job         job?    @relation(fields: [jobId], references: [id])
+  jobId       String  @db.ObjectId
 }
 
 model job {
@@ -63,7 +63,7 @@ model job {
   job_type            JobType?
   vacancies           Int?
   job_application     job_application[]
-  employer employer[]
+  employer            employer[]
 }
 
 enum Qualification {
