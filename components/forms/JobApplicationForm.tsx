@@ -4,6 +4,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button } from "@mui/material";
+import { JobApplicationSchema } from "../schema/JobApplication.schema";
 
 interface FormValues {
   name: string;
@@ -11,12 +12,6 @@ interface FormValues {
 
   resume: null;
 }
-
-const validationSchema = Yup.object({
-  email: Yup.string().email("Invalid email address").required("Required"),
-  name : Yup.string().required("Name is required"),
-  resume: Yup.mixed().required("Resume is required"),
-});
 
 const initialValues = {
   name: "",
@@ -37,7 +32,7 @@ export function JobApplicationForm() {
 
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={JobApplicationSchema}
         onSubmit={(values: FormValues, { setSubmitting }) => {
           console.log(values);
           handleSubmit();
