@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="font-extrabold text-center">
-      Welcome to sisi kwa sisi
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    Sis kwa Sis Web App fro Job application. 
+    </main>
   );
 }
