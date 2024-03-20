@@ -1,7 +1,12 @@
+import { JobDetails } from '@/components/jobdetailcomponents/JobDetails'
 import React from 'react'
 
-export function JobDetailPage() {
+function JobDetailPage() {
   return (
-    <div>Job Detail Page</div>
+    <>
+      <JobDetails />
+    </>
   )
 }
+
+export default JobDetailPage
