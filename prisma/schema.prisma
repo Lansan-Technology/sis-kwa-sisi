@@ -30,13 +30,13 @@ model job_seeker {
   names          String
   id_number      Int?
   location       String?
-  phone_number   String
+  phone_number   String?
   qualification  Qualification[]
   course         String[]
-  experience     Int
-  cv             String
+  experience     Int?
+  cv             String?
   photo          String?
-  gender         Gender
+  gender         Gender?
   certification  String[]
   application    String? 
   jobApplications          job_application[]
@@ -45,10 +45,8 @@ model job_seeker {
 model employer {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   email       String
-  names       String
-  company     String
-  description String
-  location    String
+  description String?
+  location    String?
   job         job?   @relation(fields: [jobId], references: [id])
   jobId       String @db.ObjectId
 }
