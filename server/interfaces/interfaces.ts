@@ -4,13 +4,13 @@ import { Gender, Qualification, JobStatus, JobType } from "@prisma/client";
 export interface Job {
 	title: string;
 	description: string;
-	salary_compensation: number;
-	location: string;
-	organization: string;
-	role: string;
-	status: JobStatus;
-	job_type: JobType;
-	vacancies: number;
+	salary_compensation?: string;
+	location?: string;
+	organization?: string;
+	role?: string;
+	status?: JobStatus;
+	job_type?: JobType;
+	vacancies?: number;
 }
 
 export interface JobApplication {

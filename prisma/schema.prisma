@@ -56,14 +56,14 @@ model employer {
 model job {
   id                  String            @id @default(auto()) @map("_id") @db.ObjectId
   title               String
-  description         String
-  salary_compensation Int?
+  description         String            @db.String
+  salary_compensation String?
   location            String?
-  organization        String
-  role                String
-  status              JobStatus
-  job_type            JobType
-  vacancies           Int
+  organization        String?
+  role                String?
+  status              JobStatus         @default(VACANT)
+  job_type            JobType?
+  vacancies           Int?
   job_application     job_application[]
   employer employer[]
 }

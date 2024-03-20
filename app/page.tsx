@@ -1,6 +1,12 @@
-import Image from "next/image";
-import { redirect } from "next/navigation";
+import { HeroSection, JobListingCard } from "@/components";
 
 export default function Home() {
-  redirect('/jobs')
+  return (
+    <>
+      <HeroSection />
+      <section className="flex gap-2 items-center flex-wrap justify-center">
+        <JobListingCard />
+      </section>
+    </>
+  );
 }

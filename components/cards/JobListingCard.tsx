@@ -1,8 +1,9 @@
-
-
+import { getAllJobs } from "@/server";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
-const jobData= [
+const jobData = [
   {
     jobName: "Software Engineer",
     title: "Full-stack Developer",
@@ -10,7 +11,7 @@ const jobData= [
     salary: "$90,000 - $120,000",
     location: "San Francisco, CA",
     experience: "3+ years",
-    image:'image/jobimage.jpeg'
+    image: "image/jobimage.jpeg",
   },
   {
     jobName: "Data Scientist",
@@ -46,55 +47,68 @@ const jobData= [
   },
 ];
 
+export async function JobListingCard() {
+  const jobs = await getAllJobs();
 
-export function JobListingCard() {
+  if (!jobs.length)
     return (
-      <div  className="m-5">
-        {jobData.map((job,index)=>(
-          <div key={index} className="group mx-2 mt-10 grid max-w-screen-md grid-cols-12 space-x-8 overflow-hidden rounded-lg border py-8 text-gray-700 shadow transition hover:shadow-lg sm:mx-auto">
-          <a
+      <div className="flex flex-col items-center justify-center h-96">
+        <h2 className="text-xl font-semibold mb-4">No jobs to display</h2>
+        <p className="text-gray-600 mb-8 text-sm md:text-base px-2 text-center">
+          Check back later for updates or refine your search criteria.
+        </p>
+        <Link href="/create-job" className="border border-primary px-4 py-2 rounded transition duration-300">
+            Create Job
+        </Link>
+      </div>
+    );
+
+  return (
+    <div className="m-5">
+      {jobs.map((job, index) => (
+        <div
+          key={index}
+          className="group mx-2 mt-2 grid max-w-screen-md grid-cols-12 space-x-8 overflow-hidden rounded-lg border py-8 text-gray-700 shadow transition hover:shadow-lg sm:mx-auto"
+        >
+          <Link
             href="#"
             className="order-2 col-span-1 mt-4 -ml-14 text-left text-gray-600 hover:text-gray-700 sm:-order-1 sm:ml-4"
           >
             <div className="group relative h-16 w-16 overflow-hidden rounded-lg">
-              <img
-                src= '/jobimage.jpeg'
+              <Image
+                width={100}
+                height={100}
+                src="/jobimage.jpeg"
                 alt=""
                 className="h-full w-full object-cover text-gray-700"
               />
             </div>
-          </a>
+          </Link>
           <div className="col-span-11 flex flex-col pr-8 text-left sm:pl-4">
             <h3 className="text-sm text-gray-600">{job.title}</h3>
-            <a
-              href="#"
+            <Link
+              href={`/job-detail/${job.id}`}
               className="mb-3 overflow-hidden pr-7 text-lg font-semibold sm:text-xl"
             >
-             {job.jobName}
-            </a>
-            <p className="overflow-hidden pr-7 text-sm">
-             {job.description}
-            </p>
-  
+              {job.title}
+            </Link>
             <div className="mt-5 flex flex-col space-y-3 text-sm font-medium text-gray-500 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-2">
               <div className="">
-                Experience:
+                Type:
                 <span className="ml-2 mr-3 rounded-full bg-green-100 px-2 py-0.5 text-green-900">
-                 {job.experience}
+                  {job.job_type}
                 </span>
               </div>
               <div className="">
                 Salary:
                 <span className="ml-2 mr-3 rounded-full bg-blue-100 px-2 py-0.5 text-blue-900">
-                {job.salary}
+                  {job.salary_compensation}
                 </span>
               </div>
             </div>
           </div>
         </div>
-
-        ))}
-        
-      </div>
-    );
-  }
+      ))}
+    </div>
+  )
+}
