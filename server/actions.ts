@@ -7,8 +7,8 @@ import {
   JobApplication,
   JobSeeker,
 } from "./interfaces/interfaces";
+import { prisma } from ".";
 
-const prisma = new PrismaClient();
 
 export async function createEmployer(data: Employer) {
   const createdEmployer = await prisma.employer.create({ data });
