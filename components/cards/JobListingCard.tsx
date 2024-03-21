@@ -1,55 +1,9 @@
-import { getAllJobs } from "@/server";
+import { job } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const jobData = [
-  {
-    jobName: "Software Engineer",
-    title: "Full-stack Developer",
-    description: "Develop and maintain software applications.",
-    salary: "$90,000 - $120,000",
-    location: "San Francisco, CA",
-    experience: "3+ years",
-    image: "image/jobimage.jpeg",
-  },
-  {
-    jobName: "Data Scientist",
-    title: "Data Analyst",
-    description: "Analyze complex data sets to provide insights.",
-    salary: "$100,000 - $130,000",
-    location: "New York City, NY",
-    experience: "5+ years",
-  },
-  {
-    jobName: "Marketing Manager",
-    title: "Marketing Strategist",
-    description: "Develop marketing strategies and campaigns.",
-    salary: "$80,000 - $110,000",
-    location: "Chicago, IL",
-    experience: "4+ years",
-  },
-  {
-    jobName: "UX/UI Designer",
-    title: "Senior Designer",
-    description: "Create user-friendly and visually appealing designs.",
-    salary: "$85,000 - $115,000",
-    location: "Los Angeles, CA",
-    experience: "3+ years",
-  },
-  {
-    jobName: "Sales Representative",
-    title: "Sales Associate",
-    description: "Generate leads and close sales deals.",
-    salary: "$70,000 - $100,000",
-    location: "Austin, TX",
-    experience: "2+ years",
-  },
-];
-
-export async function JobListingCard() {
-  const jobs = await getAllJobs();
-
+export async function JobListingCard({jobs}: {jobs: job[]}) {
   if (!jobs.length)
     return (
       <div className="flex flex-col items-center justify-center h-96">
@@ -112,3 +66,5 @@ export async function JobListingCard() {
     </div>
   )
 }
+
+
