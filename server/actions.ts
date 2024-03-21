@@ -55,6 +55,37 @@ export async function getJob(id: string) {
 	});
 }
 
+export async function getAppliedJobs(email: string) {
+	const applicants = await prisma.job_application.findMany({
+		where: {
+			job_seeker: {
+				email: email,
+			},
+		},
+		orderBy: {
+			date: "desc",
+		},
+	});
+
+	const persons = await prisma.job_seeker.findMany({
+		where: {
+			email: email,
+		},
+	});
+	if (!persons.at(0)) throw new Error("No Person found with this email");
+	const person = persons.at(0);
+	const appliedJobs = await prisma.job.findMany({
+		where: {
+			job_application: {
+				some: {
+					job_seekerid: person?.id,
+				},
+			},
+		},
+	});
+	return appliedJobs;
+}
+
 export async function getJobSeeker(email: string) {
 	return await prisma.job_seeker.findUnique({
 		where: {

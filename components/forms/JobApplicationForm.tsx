@@ -1,13 +1,22 @@
 "use client";
 
-import React from "react";
-import { Formik, Form, Field, ErrorMessage, FieldProps } from "formik";
+import React, { useEffect, useState } from "react";
+import {
+	Formik,
+	Form,
+	Field,
+	ErrorMessage,
+	FieldProps,
+	useField,
+} from "formik";
 import * as Yup from "yup";
 import { Button } from "@mui/material";
 import ReactQuill from "react-quill";
-import { createJobApplication } from "@/server";
+import { createJobApplication, getJob } from "@/server";
 import { useParams, useRouter } from "next/navigation";
 import { JobApplicationSchema } from "../schema/JobApplication.schema";
+import { JobApplication } from "@/server/interfaces/interfaces";
+import { toast } from "react-toastify";
 
 interface FormValues {
 	name: string;
@@ -29,24 +38,26 @@ const initialValues = {
 	cover_letter: "",
 };
 
-export function JobApplicationForm({ email }: { email: string }) {
-	const params = useParams<{ id: string }>();
+export function JobApplicationForm() {
+	const params = useParams<{ id: string; job_application: string }>();
+	const router = useRouter();
 	const handleSubmit = async (values: FormValues) => {
-		const jobApp = await createJobApplication(params.id, values);
-		console.log(jobApp);
+		await createJobApplication(params.id, values);
+		toast.success(`Successfully applied for the ${params.job_application}.`);
+		setTimeout(() => {
+			router.push("/jobs");
+		}, 3500);
 	};
 
 	return (
 		<div className='relative flex justify-center items-center flex-col text-gray-700 bg-transparent shadow-none rounded-xl bg-clip-border'>
 			<h4 className='block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900'>
-				Apply for Job.title
+				{`Apply for the ${params.job_application.replace("%20", " ")} Role`}
 			</h4>
-
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
 				onSubmit={(values: FormValues, { setSubmitting }) => {
-					console.log(values);
 					handleSubmit(values);
 					setSubmitting(false);
 				}}>
