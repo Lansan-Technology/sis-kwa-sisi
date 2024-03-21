@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage, FieldProps } from "formik";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { createJobPosting } from "@/server";
+import { CreateJobSchema } from "../schema/CreateJob.schema";
 
 export function NewJobForm() {
   return (
@@ -23,11 +24,7 @@ export function NewJobForm() {
           vacancies: "",
           organization_email: ""
         }}
-        validate={(values) => {
-          const errors = {};
-          // Add validation logic here if needed
-          return errors;
-        }}
+        validationSchema={CreateJobSchema}
         onSubmit={async (values, { setSubmitting }) => {
           await createJobPosting({
             title: values.title,

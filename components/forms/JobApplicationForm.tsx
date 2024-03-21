@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 import ReactQuill from "react-quill";
 import { createJobApplication } from "@/server";
 import { useParams, useRouter } from "next/navigation";
+import { JobApplicationSchema } from "../schema/JobApplication.schema";
 
 interface FormValues {
 	name: string;

@@ -2,40 +2,40 @@
 
 import { PrismaClient } from "@prisma/client";
 import {
-	Employer,
-	Job,
-	JobApplication,
-	JobSeeker,
+  Employer,
+  Job,
+  JobApplication,
+  JobSeeker,
 } from "./interfaces/interfaces";
 
 const prisma = new PrismaClient();
 
 export async function createEmployer(data: Employer) {
-	const createdEmployer = await prisma.employer.create({ data });
-	return createdEmployer;
+  const createdEmployer = await prisma.employer.create({ data });
+  return createdEmployer;
 }
 
 export async function createJobsSeeker(data: JobSeeker) {
-	const jobsSeeker = await prisma.job_seeker.create({
-		data: {
-			names: data.names,
-			email: data.email,
-			location: data.location,
-			phone_number: data.phone_number,
-			qualification: data.qualification,
-			course: data.course,
-			experience: data.experience,
-			cv: data.cv,
-			gender: data.gender,
-			photo: data.photo,
-			certification: data.certification,
-		},
-	});
-	return jobsSeeker;
+  const jobsSeeker = await prisma.job_seeker.create({
+    data: {
+      names: data.names,
+      email: data.email,
+      location: data.location,
+      phone_number: data.phone_number,
+      qualification: data.qualification,
+      course: data.course,
+      experience: data.experience,
+      cv: data.cv,
+      gender: data.gender,
+      photo: data.photo,
+      certification: data.certification,
+    },
+  });
+  return jobsSeeker;
 }
 
 export async function getAllJobs() {
-	return await prisma.job.findMany();
+  return await prisma.job.findMany();
 }
 
 export async function getJob(id: string) {
@@ -55,12 +55,12 @@ export async function getJobSeeker(email: string) {
 }
 
 export async function createJobPosting(data: Job) {
-	return await prisma.job.create({
-		data: {
-			title: data.title,
-			description: data.description,
-		},
-	});
+  return await prisma.job.create({
+    data: {
+      title: data.title,
+      description: data.description,
+    },
+  });
 }
 
 export async function createJobApplication(id: string, data: JobApplication) {
