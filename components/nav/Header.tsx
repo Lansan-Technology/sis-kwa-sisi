@@ -17,7 +17,7 @@ export function Header() {
               <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
                   <a
-                    href="#"
+                    href="/"
                     className="block py-2 pr-4 pl- rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0"
                     aria-current="page"
                   >
@@ -31,6 +31,15 @@ export function Header() {
                     aria-current="page"
                   >
                     Jobs
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/job-application/my"
+                    className="block py-2 pr-4 pl- rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0"
+                    aria-current="page"
+                  >
+                    My Applications
                   </a>
                 </li>
               </ul>

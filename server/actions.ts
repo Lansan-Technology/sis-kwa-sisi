@@ -7,8 +7,8 @@ import {
   JobApplication,
   JobSeeker,
 } from "./interfaces/interfaces";
+import { prisma } from ".";
 
-const prisma = new PrismaClient();
 
 export async function createEmployer(data: Employer) {
   const createdEmployer = await prisma.employer.create({ data });
@@ -46,13 +46,6 @@ export async function getJob(id: string) {
   });
 }
 
-export async function getJobSeeker(id: string) {
-  return await prisma.job_seeker.findUnique({
-    where: {
-      id: id,
-    },
-  });
-}
 
 export async function createJobPosting(data: Job) {
   const employer = await getEmployer(data.email);
@@ -70,27 +63,6 @@ export async function createJobPosting(data: Job) {
   });
 }
 
-export async function createJobApplication(
-  job_seekerid: string,
-  id: string,
-  data: JobApplication
-) {
-  const job = await getJob(id);
-  if (!job) throw new Error("No such job");
-
-  const job_seeker = await getJobSeeker(id);
-  if (!job_seeker) throw new Error("Invalid Job Seeker ID");
-  return await prisma.job_application.create({
-    data: {
-      job_seekerid: job_seeker.id,
-      jobId: job.id,
-      cover_letter: data.cover_letter,
-      cv: data.cv,
-      date: data.date,
-    },
-  });
-}
-
 export async function getEmployer(email: string) {
   let user = await prisma.employer.findUnique({ where: { email: email } });
 
@@ -102,4 +74,54 @@ export async function getEmployer(email: string) {
     });
   }
   return user;
+}
+
+export async function getJobSeeker(email: string) {
+	return await prisma.job_seeker.findUnique({
+		where: {
+			email: email,
+		},
+	});
+}
+
+export async function createJobApplication(id: string, data: JobApplication) {
+	const job = await getJob(id);
+	if (!job) throw new Error("No such job");
+
+	const job_seeker = await getJobSeeker(data.email);
+	if (!job_seeker) throw new Error("Invalid Job Seeker ID");
+	return await prisma.job_application.create({
+		data: {
+			job_seekerid: job_seeker.id,
+			jobId: job.id,
+			cover_letter: data.cover_letter,
+			cv: data.resume,
+		},
+	});
+}
+
+export async function findMyApplications(email: string) {
+  return prisma.job_application.findMany({
+    where: {
+      job_seeker: {
+        email,
+      },
+    },
+  });
+}
+
+export async function findMyJobs(email: string) {
+  return prisma.job.findMany({
+    where: {},
+  });
+}
+
+export async function findJobsByTitleOrAll(title?: string, take?: number) {
+  if (!title) return prisma.job.findMany({ take, orderBy: {} });
+
+  return prisma.job.findMany({
+    where: {
+      title,
+    },
+  });
 }

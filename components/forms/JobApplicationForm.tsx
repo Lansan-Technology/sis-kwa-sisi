@@ -1,32 +1,39 @@
 "use client";
 
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FieldProps } from "formik";
 import * as Yup from "yup";
 import { Button } from "@mui/material";
+import ReactQuill from "react-quill";
+import { createJobApplication } from "@/server";
+import { useParams, useRouter } from "next/navigation";
+import { JobApplicationSchema } from "../schema/JobApplication.schema";
 
 interface FormValues {
   name: string;
   email: string;
-
-  resume: null;
+  cover_letter: string;
+  resume: string;
 }
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Invalid email address").required("Required"),
-  name : Yup.string().required("Name is required"),
+  name: Yup.string().required("Name is required"),
   resume: Yup.mixed().required("Resume is required"),
 });
 
 const initialValues = {
   name: "",
   email: "",
-  resume: null,
+  resume: "",
+  cover_letter: "",
 };
 
 export function JobApplicationForm() {
-  const handleSubmit = () => {
-    console.log("job application submitted sucessfully");
+  const params = useParams<{ id: string }>();
+  const handleSubmit = async (values: FormValues) => {
+    const jobApp = await createJobApplication(params.id, values);
+    console.log(jobApp);
   };
 
   return (
@@ -40,7 +47,7 @@ export function JobApplicationForm() {
         validationSchema={validationSchema}
         onSubmit={(values: FormValues, { setSubmitting }) => {
           console.log(values);
-          handleSubmit();
+          handleSubmit(values);
           setSubmitting(false);
         }}
       >
@@ -53,7 +60,7 @@ export function JobApplicationForm() {
               <h6 className="block -mb-3 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-blue-gray-900">
                 Your Name
               </h6>
-              <div className="relative h-11 w-full min-w-[200px]">
+              <div className="relative h-11 w-full min-w-[300px]">
                 <Field
                   type="text"
                   name="name"
@@ -69,7 +76,7 @@ export function JobApplicationForm() {
               <h6 className="block -mb-3 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-blue-gray-900">
                 Your Email
               </h6>
-              <div className="relative h-11 w-full min-w-[200px]">
+              <div className="relative h-11 w-full min-w-[300px]">
                 <Field
                   type="email"
                   name="email"
@@ -85,7 +92,7 @@ export function JobApplicationForm() {
               <h6 className="block -mb-3 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-blue-gray-900">
                 Your Resume
               </h6>
-              <div className="relative h-11 w-full min-w-[200px]">
+              <div className="relative h-11 w-full min-w-[300px]">
                 <Field
                   type="file"
                   name="resume"
@@ -94,6 +101,24 @@ export function JobApplicationForm() {
                 />
                 <ErrorMessage
                   name="resume"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+              <h6 className="block -mb-3 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-blue-gray-900">
+                Your Cover Letter
+              </h6>
+              <div className="relative h-full w-full min-w-[300px]">
+                <Field name="cover_letter">
+                  {({ field }: FieldProps) => (
+                    <ReactQuill
+                      value={field.value}
+                      onChange={field.onChange(field.name)}
+                    />
+                  )}
+                </Field>
+                <ErrorMessage
+                  name="cover_letter"
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />
