@@ -1,6 +1,8 @@
 "use client";
+import { MyApplications } from "@/components";
 import { findMyApplications } from "@/server";
 import { job_application } from "@prisma/client";
+import Link from "next/link";
 import React, { useState } from "react";
 
 export default function Page() {
@@ -16,7 +18,7 @@ export default function Page() {
       console.log("hello world");
     }
   };
-
+console.log(myApplications);
   return (
     <>
       <div className="max-w-md mx-auto">
@@ -70,8 +72,4 @@ export default function Page() {
 }
 
 
-function MyApplications({applications}: {applications: job_application[]}){
-  if(!applications.length) return null
 
-  return <></>
-}
