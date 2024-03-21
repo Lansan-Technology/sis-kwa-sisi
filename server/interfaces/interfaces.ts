@@ -10,7 +10,7 @@ export interface Job {
 	status?: JobStatus;
 	job_type?: JobType;
 	vacancies?: number;
-	email: string;
+	organization_email: string;
 }
 
 export interface JobApplication {
