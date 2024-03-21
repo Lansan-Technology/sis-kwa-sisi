@@ -44,8 +44,6 @@ model job_seeker {
 
 model employer {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  email       String
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
   email       String @unique
   description String?
   location    String?
