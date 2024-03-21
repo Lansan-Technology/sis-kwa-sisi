@@ -78,3 +78,29 @@ export async function createJobApplication(id: string, data: JobApplication) {
 		},
 	});
 }
+
+export async function findMyApplications(email: string) {
+  return prisma.job_application.findMany({
+    where: {
+      job_seeker: {
+        email,
+      },
+    },
+  });
+}
+
+export async function findMyJobs(email: string) {
+  return prisma.job.findMany({
+    where: {},
+  });
+}
+
+export async function findJobsByTitleOrAll(title?: string, take?: number) {
+  if (!title) return prisma.job.findMany({ take, orderBy: {} });
+
+  return prisma.job.findMany({
+    where: {
+      title,
+    },
+  });
+}
