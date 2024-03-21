@@ -7,8 +7,10 @@ import { createJobPosting } from "@/server";
 import { JobType } from "@prisma/client";
 import { CreateJobSchema } from "../schema/CreateJob.schema";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export function NewJobForm() {
+	const router = useRouter();
 	return (
 		<div className='max-w-5xl mx-auto'>
 			<h2 className='text-xl font-semibold mb-4'>Create Job</h2>
@@ -37,6 +39,10 @@ export function NewJobForm() {
 						job_type: values.job_type as JobType,
 					});
 					toast.success(`${job.title} job created successfully`);
+
+					setTimeout(() => {
+						router.back();
+					}, 3500);
 					setSubmitting(false);
 				}}>
 				{({ isSubmitting }) => (
