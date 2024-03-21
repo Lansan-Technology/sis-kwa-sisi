@@ -39,19 +39,19 @@ export async function getAllJobs() {
 }
 
 export async function getJob(id: string) {
-  return await prisma.job.findUnique({
-    where: {
-      id: id,
-    },
-  });
+	return await prisma.job.findUnique({
+		where: {
+			id: id,
+		},
+	});
 }
 
-export async function getJobSeeker(id: string) {
-  return await prisma.job_seeker.findUnique({
-    where: {
-      id: id,
-    },
-  });
+export async function getJobSeeker(email: string) {
+	return await prisma.job_seeker.findUnique({
+		where: {
+			email: email,
+		},
+	});
 }
 
 export async function createJobPosting(data: Job) {
@@ -63,26 +63,20 @@ export async function createJobPosting(data: Job) {
   });
 }
 
-export async function createJobApplication(
-  job_seekerid: string,
-  id: string,
-  data: JobApplication
-) {
-  const job = await getJob(id);
-  if (!job) throw new Error("No such job");
+export async function createJobApplication(id: string, data: JobApplication) {
+	const job = await getJob(id);
+	if (!job) throw new Error("No such job");
 
-  const job_seeker = await getJobSeeker(id);
-  if (!job_seeker) throw new Error("Invalid Job Seeker ID");
-
-  return await prisma.job_application.create({
-    data: {
-      job_seekerid: job_seeker.id,
-      jobId: job.id,
-      cover_letter: data.cover_letter,
-      cv: data.cv,
-      date: data.date,
-    },
-  });
+	const job_seeker = await getJobSeeker(data.email);
+	if (!job_seeker) throw new Error("Invalid Job Seeker ID");
+	return await prisma.job_application.create({
+		data: {
+			job_seekerid: job_seeker.id,
+			jobId: job.id,
+			cover_letter: data.cover_letter,
+			cv: data.resume,
+		},
+	});
 }
 
 export async function findMyApplications(email: string) {

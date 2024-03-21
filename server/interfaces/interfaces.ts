@@ -1,6 +1,5 @@
 import { Gender, Qualification, JobStatus, JobType } from "@prisma/client";
 
-
 export interface Job {
 	title: string;
 	description: string;
@@ -15,8 +14,9 @@ export interface Job {
 
 export interface JobApplication {
 	cover_letter: string;
-	date: string;
-	cv: string;
+	resume: string;
+	email: string;
+	name: string;
 }
 
 export interface JobSeeker {
