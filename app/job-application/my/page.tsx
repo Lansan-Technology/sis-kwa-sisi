@@ -3,6 +3,8 @@ import { findMyApplications, getAppliedJobs } from "@/server";
 import { Job } from "@/server/interfaces/interfaces";
 import { job, job_application } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { MyApplications } from "@/components";
+import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -13,6 +15,7 @@ export default function Page() {
 	const router = useRouter();
 	const findApplications = async () => {
 		if (!userEmail) return;
+
 
 		try {
 			const applications = await getAppliedJobs(userEmail);
@@ -98,6 +101,5 @@ function MyApplications({
 		return <p>Search/ apply for some Jobs first</p>;
 	console.log(applications);
 	console.log("applicationsSent", jobs_applied);
-
 	return <></>;
 }
