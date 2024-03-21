@@ -2,9 +2,11 @@
 import { getJob } from "@/server";
 import React, { useEffect, useState } from "react";
 import { JobDescription } from ".";
-import { Button, Input } from "@mui/material";
+import { Button, Card, Input, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { JobStatus, JobType } from "@prisma/client";
+import { Details } from "..";
+import { useFormikContext } from "formik";
 
 interface JobApplication {
 	id: string;
@@ -23,6 +25,7 @@ export function JobDetails({ params }: { params: { id: string } }) {
 	const [job, setJob] = useState<JobApplication | null>(null);
 	const { id } = params;
 	const router = useRouter();
+
 	useEffect(() => {
 		const fetchJob = async () => {
 			const job = await getJob(id);
@@ -43,31 +46,45 @@ export function JobDetails({ params }: { params: { id: string } }) {
 						</h3>
 					</div>
 					<div className='p-4 md:p-5 space-y-4'>
-						<p className='text-base leading-relaxed text-gray-600'>
+						<div className='flex flex-wrap gap-4'>
+							<Details
+								className='bg-purple-200  '
+								title='Company/Organization'
+								description={job.organization ?? "--"}
+							/>
+							<Details
+								className='bg-purple-100'
+								title='Job Title'
+								description={job.title}
+							/>
+							{/* <p className='text-base leading-relaxed text-gray-600'>
 							Company/Organiation: <span>---</span>
-						</p>
-						<p className='text-base leading-relaxed text-gray-600'>
-							Job Title: <span>{job.title}</span>
-						</p>
-						<p className='text-base leading-relaxed text-gray-600'>
-							Job Salary:{" "}
-							<span>{job.salary_compensation ?? "Not Provied"}</span>
-						</p>
-						<p className='text-base leading-relaxed text-gray-600'>
-							Job Location: <span>{job.organization ?? "No Organization"}</span>
-						</p>
+						</p> */}
+							<Details
+								className='bg-secondary text-white'
+								title='Job Salary'
+								description={job.salary_compensation ?? "Not Provied"}
+							/>
+							<Details
+								className='bg-orange-200'
+								title='Job Location'
+								description={job.location ?? "Location Not Provided"}
+							/>
+							<Details
+								className='bg-tertiary'
+								title='Job Type'
+								description={job.job_type ?? "Contract"}
+							/>
+						</div>
 
-						<p className='text-base leading-relaxed text-gray-600'>
-							Job Type: <span>{job.job_type}</span>
-						</p>
-						<p>
+						<Paper elevation={1}>
 							<JobDescription desc={job.description} />
-						</p>
+						</Paper>
 					</div>
 					<div className='flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b'>
 						<input type='string' />
 						<Button
-							onClick={() => router.push(`${id}/job-application`)}
+							onClick={() => router.push(`${id}/${job.title}`)}
 							type='button'
 							variant='contained'
 							className='text-white bg-primary font-medium rounded-lg  px-5 py-2.5 text-center'>
