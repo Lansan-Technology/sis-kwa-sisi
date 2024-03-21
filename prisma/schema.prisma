@@ -20,7 +20,7 @@ model job_application {
   cv           String?
   job          job          @relation(fields: [jobId], references: [id])
   jobId        String       @db.ObjectId
-  job_seekerid String @db.ObjectId
+  job_seekerid String       @db.ObjectId
   job_seeker   job_seeker @relation(fields: [job_seekerid], references: [id])
 }
 

@@ -26,7 +26,6 @@ export async function createJobsSeeker(data: JobSeeker) {
 
 	}});
 	return jobsSeeker;
-
 }
 
 export async function getAllJobs() {
@@ -65,6 +64,7 @@ export async function createJobApplication(job_seekerid: string, id: string, dat
 
 	const job_seeker = await getJobSeeker(id);
 	if(!job_seeker) throw  new Error("Invalid Job Seeker ID");
+
 	return await prisma.job_application.create({
 		data: {
 			job_seekerid: job_seeker.id,

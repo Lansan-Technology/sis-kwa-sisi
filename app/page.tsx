@@ -1,6 +1,12 @@
 import { HeroSection, JobListingCard } from "@/components";
+import { getResumeCompiletion } from "@/utils";
 
-export default function Home() {
+export  default async function Home() {
+
+  const x = await getResumeCompiletion()
+
+  console.log(x)
+
   return (
     <>
       <HeroSection />
