@@ -64,14 +64,14 @@ export default function Page() {
           </button>
         </div>
       </div>
-      <MyApplications applications={myApplications}/>
+      <MyApplications applications={myApplications} />
     </>
   );
 }
 
 
-function MyApplications({applications}: {applications: job_application[]}){
-  if(!applications.length) return null
+function MyApplications({ applications }: { applications: job_application[] }) {
+  if (!applications.length) return null
 
   return <></>
 }

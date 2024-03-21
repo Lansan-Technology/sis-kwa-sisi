@@ -18,7 +18,7 @@ export default function Page() {
   };
 
   return (
-    <div className="mt-4">      
+    <div className="mt-4">
       <div className="max-w-md mx-auto">
         <label
           htmlFor="default-search"
@@ -64,6 +64,30 @@ export default function Page() {
           </button>
         </div>
       </div>
+      <MyJobs applications={myJobs} />
     </div>
   );
+}
+
+function MyJobs({ applications }: { applications: job[] }) {
+  if (!applications.length) return null;
+
+  return (
+    <>
+      <h3 className="text-xl font-semibold text-gray-600">List of Jobs</h3>
+      <div>
+        {applications.map((job, i) => (
+          <div key={i}>
+            <h1>{job.title}</h1>
+            <p><b>Company Name:</b> {job.organization}</p>
+            <p><b>Location:</b> {job.location}</p>
+            <p><b>Job type:</b> {job.job_type}</p>
+            <p><b>Job Status:</b> {job.status}</p>
+            <p><b>Job Salary Comppenation: </b> {job.salary_compensation}</p>
+          </div>
+        )
+        )}
+      </div>
+    </>
+  )
 }
