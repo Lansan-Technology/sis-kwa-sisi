@@ -2,7 +2,7 @@
 import { getJob } from "@/server";
 import React, { useEffect, useState } from "react";
 import { JobDescription } from ".";
-import { Button } from "@mui/material";
+import { Button, Input } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { JobStatus, JobType } from "@prisma/client";
 
@@ -65,6 +65,7 @@ export function JobDetails({ params }: { params: { id: string } }) {
 						</p>
 					</div>
 					<div className='flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b'>
+						<input type='string' />
 						<Button
 							onClick={() => router.push(`${id}/job-application`)}
 							type='button'
