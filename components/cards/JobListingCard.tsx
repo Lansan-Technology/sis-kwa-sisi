@@ -29,7 +29,7 @@ export async function JobListingCard({jobs}: {jobs: job[]}) {
               <Image
                 width={100}
                 height={100}
-                src="/jobimage.jpeg"
+                src="/Job.svg"
                 alt=""
                 className="h-full w-full object-cover text-gray-700"
               />
