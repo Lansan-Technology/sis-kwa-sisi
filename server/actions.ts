@@ -156,6 +156,9 @@ export async function findMyApplications(email: string) {
 				email,
 			},
 		},
+		include: {
+			job: true,
+		},
 	});
 }
 
