@@ -8,9 +8,6 @@ export async function JobListingCard({jobs}: {jobs: job[]}) {
     return (
       <div className="flex flex-col items-center justify-center h-96">
         <h2 className="text-xl font-semibold mb-4">No jobs to display</h2>
-        <p className="text-gray-600 mb-8 text-sm md:text-base px-2 text-center">
-          Check back later for updates or refine your search criteria.
-        </p>
         <Link href="/create-job" className="border border-primary px-4 py-2 rounded transition duration-300">
             Create Job
         </Link>
