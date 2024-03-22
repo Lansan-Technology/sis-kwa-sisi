@@ -15,7 +15,7 @@ export default function RootLayout({
 			<html lang='en'>
 				<body className={"h-screen w-full m-0 p-0"}>
 					<Header />
-					<main className='overflow-y-scroll h-[674px]'>{children}</main>
+					<main className='overflow-y-scroll'>{children}</main>
 					<Footer />
 					<ToastContainer
 						autoClose={3000}
