@@ -27,7 +27,7 @@ model job_application {
 model job_seeker {
   id              String            @id @default(auto()) @map("_id") @db.ObjectId
   email           String            @unique()
-  names           String
+  names           String?
   id_number       Int?
   location        String?
   phone_number    String?
@@ -43,11 +43,11 @@ model job_seeker {
 }
 
 model employer {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  email       String @unique
-  description String?
-  location    String?
-  job         job[]
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String  @unique
+  name     String?
+  location String?
+  job      job[]
 }
 
 model job {
@@ -62,8 +62,8 @@ model job {
   job_type            JobType?
   vacancies           Int?
   job_application     job_application[]
-  employerId          String @db.ObjectId
-  employer            employer  @relation(fields: [employerId], references: [id])
+  employerId          String            @db.ObjectId
+  employer            employer          @relation(fields: [employerId], references: [id])
 }
 
 enum Qualification {
