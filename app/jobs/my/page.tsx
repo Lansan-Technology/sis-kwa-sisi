@@ -76,7 +76,7 @@ function MyJobs({ applications }: { applications: job[] }) {
     return (
       <div className="flex flex-col items-center justify-center h-96">
         <h2 className="text-xl font-semibold mb-4">
-          Enter email/or Apply for job First
+          Enter email/or Create a Job.
         </h2>
         <Link
           href="/create-job"
