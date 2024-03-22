@@ -1,6 +1,5 @@
 "use server";
-
-import { PrismaClient } from "@prisma/client";
+import { prisma } from ".";
 import {
   Employer,
   Job,
@@ -8,7 +7,6 @@ import {
   JobSeeker,
 } from "./interfaces/interfaces";
 
-const prisma = new PrismaClient();
 
 export async function createEmployer(data: Employer) {
   const createdEmployer = await prisma.employer.create({ data });
@@ -163,9 +161,11 @@ export async function findMyApplications(email: string) {
 }
 
 export async function findMyJobs(email: string) {
-  return prisma.job.findMany({
-    where: {},
-  });
+	return prisma.job.findMany({
+		where: {
+			employer: {email}
+		},
+	});
 }
 
 export async function findJobsByTitleOrAll(title?: string, take?: number) {
