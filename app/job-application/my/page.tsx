@@ -1,19 +1,38 @@
 "use client";
-import { findMyApplications } from "@/server";
-import { job_application } from "@prisma/client";
+import { findMyApplications, getAppliedJobs } from "@/server";
+import { job, job_application } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { MyApplications } from "@/components";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import Link from "next/link";
 
 export default function Page() {
-  const [myApplications, setMyApplication] = useState<job_application[]>([]);
+  const [myApplications, setMyApplication] = useState<job[] | []>([]);
+  const [appliedJobs, setAppliedJos] = useState<job_application[] | []>([]);
   const [userEmail, setUserEmail] = useState<string | undefined>();
+  const router = useRouter();
   const findApplications = async () => {
     if (!userEmail) return;
 
     try {
-      const applications = await findMyApplications(userEmail);
-      setMyApplication(applications);
+      const applications = await getAppliedJobs(userEmail);
+      const foundApplications = await findMyApplications(userEmail);
+      if (
+        !applications.at(0) ||
+        applications.length < 0 ||
+        !foundApplications.at(0)
+      ) {
+        toast.error(`No Jobs Applied using ${userEmail}`);
+        setTimeout(() => {
+          router.push("/jobs");
+        });
+      }
+      setAppliedJos(foundApplications);
+      setMyApplication(() => applications);
     } catch (e) {
-      console.log("hello world");
+      toast.error(`No Jobs Applied using ${userEmail}`);
+      router.push("/jobs");
     }
   };
 
@@ -64,14 +83,33 @@ export default function Page() {
           </button>
         </div>
       </div>
-      <MyApplications applications={myApplications} />
+      <JobApplications
+        applications={myApplications}
+        jobs_applied={appliedJobs}
+      />
     </>
   );
 }
 
+function JobApplications({
+  applications,
+  jobs_applied,
+}: {
+  applications: job[];
+  jobs_applied: job_application[];
+}) {
+  if (!applications.length || !jobs_applied.at(0))
+    return (
+      <div className="flex flex-col items-center justify-center h-96">
+        <h2 className="text-xl font-semibold mb-4">Enter email/or Apply for job First</h2>
+        <Link
+          href="/jobs"
+          className="border border-primary px-4 py-2 rounded transition duration-300"
+        >
+          Find Jobs
+        </Link>
+      </div>
+    );
 
-function MyApplications({ applications }: { applications: job_application[] }) {
-  if (!applications.length) return null
-
-  return <></>
+  return <MyApplications applications={jobs_applied} />;
 }

@@ -6,20 +6,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { Footer, Header } from "@/components";
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <>
-      <html lang="en">
-        <body className={"h-screen w-full"}>
-          <Header />
-          <main className="">{children}</main>
-          <Footer />
-          <ToastContainer />
-        </body>
-      </html>
-    </>
-  );
+	return (
+		<>
+			<html lang='en'>
+				<body className={"h-screen w-full m-0 p-0"}>
+					<Header />
+					<main className='overflow-y-scroll h-[674px]'>{children}</main>
+					<Footer />
+					<ToastContainer
+						autoClose={3000}
+						bodyClassName='text-sm p-2'
+					/>
+				</body>
+			</html>
+		</>
+	);
 }
