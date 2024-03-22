@@ -1,7 +1,8 @@
+import { ApplicantsCard } from '@/components'
 import React from 'react'
 
-export default function Page() {
+export default function Page({params}:{params:{id:string}}) {
   return (
-    <div>page</div>
+   <ApplicantsCard jobId={params.id} />
   )
 }
