@@ -7,29 +7,25 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Link from "next/link";
 
+interface JobApplication extends job_application {
+  job:job
+
+}
+
 export default function Page() {
-  const [myApplications, setMyApplication] = useState<job[] | []>([]);
-  const [appliedJobs, setAppliedJos] = useState<job_application[] | []>([]);
+  const [myApplications, setMyApplication] = useState<JobApplication[]>([]);
+  
   const [userEmail, setUserEmail] = useState<string | undefined>();
   const router = useRouter();
   const findApplications = async () => {
     if (!userEmail) return;
 
     try {
-      const applications = await getAppliedJobs(userEmail);
+      
       const foundApplications = await findMyApplications(userEmail);
-      if (
-        !applications.at(0) ||
-        applications.length < 0 ||
-        !foundApplications.at(0)
-      ) {
-        toast.error(`No Jobs Applied using ${userEmail}`);
-        setTimeout(() => {
-          router.push("/jobs");
-        });
-      }
-      setAppliedJos(foundApplications);
-      setMyApplication(() => applications);
+      
+      
+      setMyApplication(foundApplications);
     } catch (e) {
       toast.error(`No Jobs Applied using ${userEmail}`);
       router.push("/jobs");
@@ -85,7 +81,7 @@ export default function Page() {
       </div>
       <JobApplications
         applications={myApplications}
-        jobs_applied={appliedJobs}
+        
       />
     </>
   );
@@ -93,13 +89,12 @@ export default function Page() {
 
 function JobApplications({
   applications,
-  jobs_applied,
+  
 }: {
-  applications: job[];
-  jobs_applied: job_application[];
+  applications: JobApplication[];
+  
 }) {
-  if (!applications.length || !jobs_applied.at(0))
-    return (
+  if (!applications.length ) (
       <div className="flex flex-col items-center justify-center h-96">
         <h2 className="text-xl font-semibold mb-4">Enter email/or Apply for job First</h2>
         <Link
@@ -111,5 +106,5 @@ function JobApplications({
       </div>
     );
 
-  return <MyApplications applications={jobs_applied} />;
+  return <MyApplications applications={applications} />;
 }
