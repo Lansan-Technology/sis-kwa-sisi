@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export async function JobListingCard({jobs}: {jobs: job[]}) {
+export  function JobListingCard({jobs}: {jobs: job[]}) {
   if (!jobs.length)
     return (
       <div className="flex flex-col items-center justify-center h-96">

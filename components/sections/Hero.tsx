@@ -1,6 +1,20 @@
-import React from 'react'
+'use client'
+import React, { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 
-export function HeroSection() {
+
+interface HeroSectionProps{
+  setSearchTitle:Dispatch<SetStateAction<string>>;
+}
+
+export function HeroSection({setSearchTitle}:HeroSectionProps) {
+  const [searchInput, setSearchInput]= useState<string>('');
+
+  function handleSubmit(event:FormEvent) {
+    event.preventDefault();
+    setSearchTitle(searchInput);
+    
+  }
+
     return (
       <section className="bg-white">
         <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
@@ -62,9 +76,12 @@ export function HeroSection() {
                 id="default-search"
                 className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
                 placeholder="Find jobs..."
+                value={searchInput}
+                onChange={(e)=>setSearchInput(e.target.value)}
                 required
               />
               <button
+              onClick={handleSubmit}
                 type="submit"
                 className="text-white absolute end-2.5 bottom-2.5 bg-primary hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
               >

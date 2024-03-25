@@ -7,7 +7,6 @@ import {
   JobSeeker,
 } from "./interfaces/interfaces";
 
-
 export async function createEmployer(data: Employer) {
   const createdEmployer = await prisma.employer.create({ data });
   return createdEmployer;
@@ -161,11 +160,11 @@ export async function findMyApplications(email: string) {
 }
 
 export async function findMyJobs(email: string) {
-	return prisma.job.findMany({
-		where: {
-			employer: {email}
-		},
-	});
+  return prisma.job.findMany({
+    where: {
+      employer: { email },
+    },
+  });
 }
 
 export async function findJobsByTitleOrAll(title?: string, take?: number) {
@@ -173,13 +172,16 @@ export async function findJobsByTitleOrAll(title?: string, take?: number) {
 
   return prisma.job.findMany({
     where: {
-      title,
+      title: {
+        contains: title,
+        mode: "insensitive",
+      },
     },
+    take,
   });
 }
 
 export async function findJobApplicantsById(id: string) {
- 
   const applicants = await prisma.job_application.findMany({
     where: {
       jobId: id,
