@@ -2,7 +2,6 @@
 import { findMyJobs } from "@/server";
 import { job } from "@prisma/client";
 import React, { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
 
@@ -133,7 +132,7 @@ function MyJobs({ applications }: { applications: job[] }) {
                 </p>
                 <div className="flex justify-end p-4">
                   <Link className="text-white bg-primary hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2" href={`/job-detail/${job.id}/applicants`}>
-                    View Applicant
+                    View Applicants
                   </Link>
                 </div>
               </div>

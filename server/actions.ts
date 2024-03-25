@@ -193,3 +193,23 @@ export async function findJobApplicantsById(id: string) {
 
   return applicants;
 }
+
+export async function getJobApplicants(jobId:string, options?: {[key: string]: boolean}) {
+	return prisma.job_application.findMany({
+		where: {
+			job: {id: jobId}
+		},
+		include: {
+			job: true,
+			job_seeker: true,
+			...options
+		}
+	})
+}
+
+// export async function getJobApplicant(jobId:string) {
+// 	return prisma.job_application.findUnique({
+// 		where: {
+// 			job_seeker: {id: jobId}
+// 	})
+// }
