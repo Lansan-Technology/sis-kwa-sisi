@@ -3,6 +3,7 @@ import { findMyJobs } from "@/server";
 import { job } from "@prisma/client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function Page() {
   const [myJobs, setMyJobs] = useState<job[]>([]);
@@ -14,7 +15,7 @@ export default function Page() {
       const applications = await findMyJobs(userEmail);
       setMyJobs(applications);
     } catch (e) {
-      console.log("hello world");
+      toast.error('Error ')
     }
   };
 

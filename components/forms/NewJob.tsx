@@ -5,7 +5,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { createJobPosting } from "@/server";
 import { JobType } from "@prisma/client";
-import { CreateJobSchema } from "../schema/CreateJob.schema";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
