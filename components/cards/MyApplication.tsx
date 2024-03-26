@@ -11,7 +11,7 @@ export function MyApplications({
 }: {
   applications: JobApplication[];
 }) {
- console.log(applications);
+
 
   return (
     
