@@ -1,5 +1,6 @@
 import { findJobApplicantsById } from "@/server/actions";
 import Link from "next/link";
+
 export async function ApplicantsCard({ jobId }: { jobId: string }) {
   const jobApplicants = await findJobApplicantsById(jobId);
 

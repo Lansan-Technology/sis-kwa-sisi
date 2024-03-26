@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getJobApplicants } from "@/server";
+
 export default function Page () {
   
   return (
@@ -32,6 +32,3 @@ function ApplicantDetails() {
 }
 
 
-//Job Seeker
-//Job Application
-//Job
