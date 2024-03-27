@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
 	}`;
 
 	try {
-		await writeFile(
+		writeFile(
 			join(process.cwd(), "/public/resume/", fileName),
 			buffer,
 			err => {

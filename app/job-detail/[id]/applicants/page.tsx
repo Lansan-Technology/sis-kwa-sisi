@@ -14,6 +14,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     job_seeker: true,
     job: true,
   });
+
+  
   return (
     <div className="flex flex-col justify-center gap-2 p-4 items-center">
       <div className="text-gray-900 font-bold text-xl mb-2">Job Applicants</div>

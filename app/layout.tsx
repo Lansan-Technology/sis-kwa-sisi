@@ -13,9 +13,9 @@ export default function RootLayout({
 	return (
 		<>
 			<html lang='en'>
-				<body className={"h-screen w-full m-0 p-0"}>
+				<body className={"h-screen w-full m-0 p-0 flex flex-col"}>
 					<Header />
-					<main className='overflow-y-scroll'>{children}</main>
+					<main className='overflow-y-scroll flex-1'>{children}</main>
 					<Footer />
 					<ToastContainer
 						autoClose={3000}

@@ -56,9 +56,8 @@ export function JobApplicationForm() {
 				initialValues={initialValues}
 				validationSchema={validationSchema}
 				onSubmit={(values: FormValues, { setSubmitting }) => {
-					console.log(values);
-					// handleSubmit(values);
-					// setSubmitting(false);
+					handleSubmit(values);
+					setSubmitting(false);
 				}}>
 				{({ isSubmitting, setFieldValue, setFieldError }) => (
 					<Form
