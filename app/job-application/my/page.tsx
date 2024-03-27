@@ -24,7 +24,6 @@ export default function Page() {
       
       const foundApplications = await findMyApplications(userEmail);
       
-      
       setMyApplication(foundApplications);
     } catch (e) {
       toast.error(`No Jobs Applied using ${userEmail}`);
