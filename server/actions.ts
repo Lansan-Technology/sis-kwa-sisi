@@ -31,7 +31,7 @@ export async function createJobsSeeker(data: JobSeeker) {
   return jobsSeeker;
 }
 
-export async function createPartialJobSeeker(email: string) {
+export async function createPartialJobSeeker(email: string, name: string) {
   const jobsSeeker = await prisma.job_seeker.create({
     data: {
       email: email,
@@ -52,37 +52,6 @@ export async function getJob(id: string) {
   });
 }
 
-export async function getAppliedJobs(email: string) {
-  const applicants = await prisma.job_application.findMany({
-    where: {
-      job_seeker: {
-        email: email,
-      },
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
-
-  const persons = await prisma.job_seeker.findMany({
-    where: {
-      email: email,
-    },
-  });
-  if (!persons.at(0)) throw new Error("No Person found with this email");
-  const person = persons.at(0);
-  const appliedJobs = await prisma.job.findMany({
-    where: {
-      job_application: {
-        some: {
-          job_seekerid: person?.id,
-        },
-      },
-    },
-  });
-  return appliedJobs;
-}
-
 export async function getJobSeeker(email: string) {
   return await prisma.job_seeker.findUnique({
     where: {
@@ -90,8 +59,6 @@ export async function getJobSeeker(email: string) {
     },
   });
 }
-
-// export async function
 
 export async function createJobPosting(data: Job) {
   console.log(data.organization_email);
@@ -133,7 +100,7 @@ export async function createJobApplication(id: string, data: JobApplication) {
 
   let job_seeker = await getJobSeeker(data.email);
   if (!job_seeker) {
-    job_seeker = await createPartialJobSeeker(data.email);
+    job_seeker = await createPartialJobSeeker(data.email, data.name);
   }
 
   return await prisma.job_application.create({

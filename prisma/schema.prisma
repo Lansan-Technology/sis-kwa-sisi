@@ -34,7 +34,7 @@ model job_seeker {
   qualification   Qualification[]
   course          String[]
   experience      Int?
-  cv              String?
+  cv              String             @default("")
   photo           String?
   gender          Gender?
   certification   String[]

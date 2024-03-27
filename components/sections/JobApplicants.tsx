@@ -12,6 +12,15 @@ interface Application extends job_application {
 
 export function JobApplicants({ applicants }: { applicants: Application[] }) {
   const [open, setOpen] = useState<boolean>(false);
+
+  if (!applicants.length)
+    return (
+      <div className="flex flex-col items-center justify-center h-96">
+        <h2 className="text-xl font-semibold mb-4">No applicants yet!</h2>
+      </div>
+    );
+
+
   return (
     <div>
       {applicants.map((applicant, i) => (
