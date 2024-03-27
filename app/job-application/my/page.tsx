@@ -1,5 +1,5 @@
 "use client";
-import { findMyApplications, getAppliedJobs } from "@/server";
+import { findMyApplications } from "@/server";
 import { job, job_application } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { MyApplications } from "@/components";
@@ -13,17 +13,15 @@ interface JobApplication extends job_application {
 }
 
 export default function Page() {
-  const [myApplications, setMyApplication] = useState<JobApplication[]>([]);
-  
-  const [userEmail, setUserEmail] = useState<string | undefined>();
   const router = useRouter();
+  const [userEmail, setUserEmail] = useState<string | undefined>();
+  const [myApplications, setMyApplication] = useState<JobApplication[]>([]);
+   
   const findApplications = async () => {
     if (!userEmail) return;
 
     try {
-      
-      const foundApplications = await findMyApplications(userEmail);
-      
+      const foundApplications = await findMyApplications(userEmail);  
       setMyApplication(foundApplications);
     } catch (e) {
       toast.error(`No Jobs Applied using ${userEmail}`);

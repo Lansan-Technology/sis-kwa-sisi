@@ -1,11 +1,14 @@
+"use client";
 import { HeroSection, Jobs } from "@/components";
+import { useState } from "react";
 
-export default async function Home() {
+export default function Home() {
+  const [searchTitle, setSearchTitle] = useState<string>("");
 
   return (
     <>
-      <HeroSection />
-      <Jobs searchTitle={''}/>
+      <HeroSection setSearchTitle={setSearchTitle} />
+      <Jobs searchTitle={searchTitle} />
     </>
   );
 }
