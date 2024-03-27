@@ -61,7 +61,6 @@ export async function getJobSeeker(email: string) {
 }
 
 export async function createJobPosting(data: Job) {
-  console.log(data.organization_email);
   let new_employer;
   const employer = await prisma.employer.findMany({
     where: {
